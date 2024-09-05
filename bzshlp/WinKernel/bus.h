@@ -91,7 +91,7 @@ namespace BazisLib
 				static void sInterfaceDereference(PVOID Context);
 
 			private:
-				PDO_HANDLER_DECL PDOBase(const wchar_t *pwszDeviceType = L"StandardDevice", const wchar_t *pwszDeviceName = L"Unknown device", const wchar_t *pwszLocation = L"Unknown");
+				PDOBase(const wchar_t *pwszDeviceType = L"StandardDevice", const wchar_t *pwszDeviceName = L"Unknown device", const wchar_t *pwszLocation = L"Unknown");
 				virtual ~PDOBase();
 			public:
 
