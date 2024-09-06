@@ -4,7 +4,6 @@
   <Target Name="CheckEnvironment">
     <Error Condition="(!exists('$(WDKPATH)\include\km')) and (('$(Configuration)'=='Debug (WinKernel)') or ('$(Configuration)'=='Release (WinKernel)'))" Text="The WDK_PATH environment variable is missing or does not point at Windows 8.x Driver Kit" />
     <Error Condition="(!exists('$(WDK7PATH)\inc\ddk')) and (('$(Configuration)'=='Debug (WinKernel-WDK7)') or ('$(Configuration)'=='Release (WinKernel-WDK7)'))" Text="The WDK7_PATH environment variable is missing or does not point at Windows Driver Kit 7.1.0" />
-    <Error Condition="(!exists('$(STLPORT_PATH)\stlport')) and (('$(Configuration)'=='Debug (WinKernel-WDK7)') or ('$(Configuration)'=='Release (WinKernel-WDK7)') or ('$(Configuration)'=='Debug (WinKernel)') or ('$(Configuration)'=='Release (WinKernel)'))" Text="The STLPORT_PATH environment variable should point at STLPort-kernel.%0D%0AYou can get STLPort-kernel at http://github.com/sysprogs/stlport-kernel.git" />
   </Target>
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug (KEXT)|Win32">
@@ -92,7 +91,7 @@
     <ProjectGuid>{A009693F-AADD-42CF-8E6E-F7BBF5601E5C}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>bzscore</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug (Win32)|Win32'" Label="Configuration">
@@ -370,7 +369,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_AMD64_;_DDK_;_NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(WDK7PATH)\inc\ddk;$(WDK7PATH)\inc\api;$(WDK7PATH)\inc\crt;$(BZSLIB_PATH);$(STLPORT_PATH)\stlport</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(UniversalCRT_IncludePath);$(VC_VC_IncludePath);$(WDK7PATH)\inc\ddk;$(WDK7PATH)\inc\api;$(WDK7PATH)\inc\crt;$(BZSLIB_PATH)</AdditionalIncludeDirectories>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <StringPooling>true</StringPooling>
       <ExceptionHandling>false</ExceptionHandling>
