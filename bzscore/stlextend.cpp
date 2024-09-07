@@ -6,6 +6,8 @@
 /// Implements code to use STL in a driver project
 
 #include "stdafx.h"
+
+#ifdef _KERNEL_MODE
 // #include <ntifs.h>
 // #include <fltKernel.h>
 #include <string>
@@ -237,3 +239,5 @@ int _memicmp(const void *buf1, const void *buf2, size_t count) {
     }
     return 0;
 }
+#endif
+

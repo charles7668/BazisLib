@@ -13,6 +13,7 @@
 #include "WinKernel/status_defs.h"
 #elif defined (_WIN32)
 #include "Win32/status_defs.h"
+#include <vector>
 #else
 #error Status code mapping is not defined for current platform.
 #endif
