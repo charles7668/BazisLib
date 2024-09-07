@@ -17,6 +17,10 @@
 #error Status code mapping is not defined for current platform.
 #endif
 
+#ifdef _DEBUG
+#include <list>
+#endif
+
 #include "string.h"
 #include "assert.h"
 

@@ -88,7 +88,7 @@ namespace BazisLib
 			String ToString(bool IncludeCurlyBrackets = false) const
 			{
 				wchar_t wsz[128];
-				swprintf(wsz, IncludeCurlyBrackets ? L"{%08x-%04x-%04x-%02x%02x-%02x%02x%02x%02x%02x%02x}" : L"%08x-%04x-%04x-%02x%02x-%02x%02x%02x%02x%02x%02x",
+				swprintf_s(wsz, IncludeCurlyBrackets ? L"{%08x-%04x-%04x-%02x%02x-%02x%02x%02x%02x%02x%02x}" : L"%08x-%04x-%04x-%02x%02x-%02x%02x%02x%02x%02x%02x",
 					m_Guid.Data1, m_Guid.Data2, m_Guid.Data3,
 					m_Guid.Data4[0], m_Guid.Data4[1], m_Guid.Data4[2], m_Guid.Data4[3],
 					m_Guid.Data4[4], m_Guid.Data4[5], m_Guid.Data4[6], m_Guid.Data4[7]);

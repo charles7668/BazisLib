@@ -9,10 +9,12 @@ extern "C" {
  void * __cdecl realloc(void * _Memory, size_t _Size);
 }
 #else
+#ifndef _DEBUG
 extern "C" {
  void   __cdecl free(void * _Memory);
  void * __cdecl malloc(size_t _Size);
 }
+#endif
 #endif
 
 #define EXTENDED_REALLOC

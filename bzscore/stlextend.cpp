@@ -199,6 +199,30 @@ int __cdecl __stdio_common_vswprintf_s(
     return local__vsnwprintf(_Buffer, _BufferCount, _Format, _ArgList);
 }
 
+// An alternative implementation of __stdio_common_vswprintf
+_Success_(return >= 0) _Check_return_opt_ EXTERN_C
+int __cdecl __stdio_common_vswprintf(
+    _In_ unsigned __int64 _Options,
+    _Out_writes_z_(_BufferCount) wchar_t* _Buffer, _In_ size_t _BufferCount,
+    _In_z_ _Printf_format_string_params_(2) wchar_t const* _Format,
+    _In_opt_ _locale_t _Locale, va_list _ArgList) {
+    UNREFERENCED_PARAMETER(_Options);
+    UNREFERENCED_PARAMETER(_Locale);
+
+    // Calls _vsnwprintf exported by ntoskrnl
+    using _vsnwprintf_type =
+        int __cdecl(wchar_t*, size_t, const wchar_t*, va_list);
+    static _vsnwprintf_type* local__vsnwprintf = nullptr;
+    if (!local__vsnwprintf) {
+        UNICODE_STRING proc_name_U = {};
+        RtlInitUnicodeString(&proc_name_U, L"_vsnwprintf");
+        local__vsnwprintf = reinterpret_cast<_vsnwprintf_type*>(
+            MmGetSystemRoutineAddress(&proc_name_U));
+    }
+
+    return local__vsnwprintf(_Buffer, _BufferCount, _Format, _ArgList);
+}
+
 int _memicmp(const void *buf1, const void *buf2, size_t count) {
     const unsigned char *p1 = (const unsigned char *)buf1;
     const unsigned char *p2 = (const unsigned char *)buf2;

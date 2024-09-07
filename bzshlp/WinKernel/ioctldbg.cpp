@@ -745,7 +745,7 @@ void BazisLib::DDK::DumpDeviceControlCode(const char *pszFormat, ULONG Code)
 	const char *pszCode = MapDeviceControlCode(Code);
 	if (!pszCode)
 	{
-		sprintf(szCode, "[%08X; (devtype=%04X; code=%03X)]", Code, DEVICE_TYPE_FROM_CTL_CODE(Code), (Code >> 2) & 0x7FF);
+		sprintf_s(szCode, "[%08X; (devtype=%04X; code=%03X)]", Code, DEVICE_TYPE_FROM_CTL_CODE(Code), (Code >> 2) & 0x7FF);
 		pszCode = szCode;
 	}
 	DbgPrint(pszFormat, pszCode);

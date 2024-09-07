@@ -976,7 +976,7 @@ namespace BazisLib
 	static inline size_t vsnprintf_helper(wchar_t *pBuffer, size_t MaxSize, const wchar_t *pFormat, va_list args)
 	{
 #ifdef BZS_POSIX
-		return vswprintf(pBuffer, MaxSize, pFormat, args);
+		return vswprintf_s(pBuffer, MaxSize, pFormat, args);
 #else
 //#if !defined(_DDK) && !defined(UNDER_CE)
 #if 0
