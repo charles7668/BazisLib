@@ -13,7 +13,8 @@ String ActionStatus::FormatErrorCode(CommonErrorType code)
 		return pwszStatus;
 #endif
 	wchar_t wsz[512];
-	_snwprintf(wsz, sizeof(wsz)/sizeof(wsz[0]), L"NTSTATUS code %08X", code);
+	swprintf_s(wsz, sizeof(wsz), L"NTSTATUS code %08X", code);
+	// _snwprintf_s(wsz, sizeof(wsz)/sizeof(wsz[0]), L"NTSTATUS code %08X", code);
 	return wsz;
 }
 #endif

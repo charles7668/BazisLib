@@ -118,6 +118,7 @@ extern "C" NTSTATUS _stdcall DriverEntry(
 	IN PUNICODE_STRING      RegistryPath
 	)
 {
+	DriverObject->DriverUnload = DriverUnloadHook;
 	NTSTATUS st = InitializeCppRunTime();
 	if (!NT_SUCCESS(st))
 		return st;
@@ -125,7 +126,7 @@ extern "C" NTSTATUS _stdcall DriverEntry(
 	st = CPPDriverEntry(DriverObject, RegistryPath);
 	if (!NT_SUCCESS(st))
 		TerminateCppRunTime();
-	else if (DriverObject->DriverUnload)
+	if (DriverObject->DriverUnload != DriverUnloadHook)
 	{
 		s_OriginalDriverUnload = DriverObject->DriverUnload;
 		DriverObject->DriverUnload = DriverUnloadHook;

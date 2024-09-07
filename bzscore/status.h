@@ -1,8 +1,6 @@
 #pragma once
 
 #include "cmndef.h"
-#include <list>
-#include <vector>
 #include <stdio.h>
 
 #if defined(_DEBUG) && defined(_NDEBUG)

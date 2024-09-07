@@ -1,5 +1,7 @@
 #pragma once
 
+// #define _NO_CRT_STDIO_INLINE
+
 #if _WIN32 || _WIN64
 #if _WIN64
 #define BZSLIB64

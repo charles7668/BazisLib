@@ -228,14 +228,15 @@ void BusDevice::PDOBase::GenerateIDStrings(int UniqueDeviceNumber)
 {
 	ASSERT(m_pBusDevice);
 	wchar_t wsz[100];
-	swprintf(wsz, L"%s\\%s", m_pBusDevice->m_BusPrefix.c_str(), m_DeviceType.c_str(), UniqueDeviceNumber);
+	swprintf_s(wsz,sizeof(wsz), L"%s\\%s", m_pBusDevice->m_BusPrefix.c_str(), m_DeviceType.c_str(), UniqueDeviceNumber);
 	m_DeviceID = wsz;
-	swprintf(wsz, L"%s\\%s", m_pBusDevice->m_BusPrefix.c_str(), m_DeviceType.c_str(), UniqueDeviceNumber);
+	swprintf_s(wsz,sizeof(wsz), L"%s\\%s", m_pBusDevice->m_BusPrefix.c_str(), m_DeviceType.c_str(), UniqueDeviceNumber);
 	m_HardwareIDs = wsz;
 
-	swprintf(wsz, L"%02d", UniqueDeviceNumber);
+	swprintf_s(wsz,sizeof(wsz), L"%02d", UniqueDeviceNumber);
 	m_InstanceID = wsz;
-	swprintf(wsz, L"%s\\%s", m_pBusDevice->m_BusPrefix.c_str(), m_DeviceType.c_str(), UniqueDeviceNumber);
+	swprintf_s(wsz, sizeof(wsz), L"%s\\%s", m_pBusDevice->m_BusPrefix.c_str(), m_DeviceType.c_str(),
+	           UniqueDeviceNumber);
 	m_CompatibleIDs = wsz;
 }
 

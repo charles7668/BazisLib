@@ -42,7 +42,7 @@ StorageDevice::StorageDevice(LPCWSTR pwszDevicePrefix,
 	}
 	for (unsigned num = 0; ; num++)
 	{
-		swprintf(&wszFullName[length], L"%d", num);
+		swprintf_s(&wszFullName[length], sizeof(wszFullName) / sizeof(wchar_t) - length, L"%d", num);
 		bool bFound = false;
 		switch (File::GetOpenFileStatus(wszFullName))
 		{

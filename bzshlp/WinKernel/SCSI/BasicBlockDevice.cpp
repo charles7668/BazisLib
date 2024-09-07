@@ -121,7 +121,8 @@ BazisLib::ActionStatus BazisLib::DDK::SCSI::BasicSCSIBlockDevice::GetInquiryData
 
 	C_ASSERT(sizeof(pData->ProductRevisionLevel) == 4);
 	char sz[5] = {0,};
-	_snprintf(sz, sizeof(sz), "%04d", GetRevisionLevel() % 10000);
+	sprintf_s(sz, "%04d", GetRevisionLevel() % 10000);
+	// _snprintf_s(sz, sizeof(sz), "%04d", GetRevisionLevel() % 10000);
 
 	memcpy(pData->ProductRevisionLevel, sz, sizeof(pData->ProductRevisionLevel));
 	return MAKE_STATUS(Success);

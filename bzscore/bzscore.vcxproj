@@ -1,10 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" InitialTargets="CheckEnvironment" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\FindBazisLib.props" />
-  <Target Name="CheckEnvironment">
-    <Error Condition="(!exists('$(WDKPATH)\include\km')) and (('$(Configuration)'=='Debug (WinKernel)') or ('$(Configuration)'=='Release (WinKernel)'))" Text="The WDK_PATH environment variable is missing or does not point at Windows 8.x Driver Kit" />
-    <Error Condition="(!exists('$(WDK7PATH)\inc\ddk')) and (('$(Configuration)'=='Debug (WinKernel-WDK7)') or ('$(Configuration)'=='Release (WinKernel-WDK7)'))" Text="The WDK7_PATH environment variable is missing or does not point at Windows Driver Kit 7.1.0" />
-  </Target>
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug (KEXT)|Win32">
       <Configuration>Debug (KEXT)</Configuration>
@@ -91,7 +87,7 @@
     <ProjectGuid>{A009693F-AADD-42CF-8E6E-F7BBF5601E5C}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>bzscore</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug (Win32)|Win32'" Label="Configuration">
@@ -163,7 +159,7 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release (ANSI)|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -265,7 +261,8 @@
     <IncludePath>$(BZSLIB_PATH)\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release (WinKernel-WDK7)|x64'">
-    <IncludePath>$(BZSLIB_PATH)\;$(IncludePath)</IncludePath>
+    <IncludePath>$(UniversalCRT_IncludePath);$(BZSLIB_PATH);$(VC_VC_IncludePath)</IncludePath>
+    <ExternalIncludePath>$(WindowsSDK_IncludePath);</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release (ANSI)|x64'">
     <IncludePath>$(BZSLIB_PATH)\;$(IncludePath)</IncludePath>
@@ -369,7 +366,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_AMD64_;_DDK_;_NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(UniversalCRT_IncludePath);$(VC_VC_IncludePath);$(WDK7PATH)\inc\ddk;$(WDK7PATH)\inc\api;$(WDK7PATH)\inc\crt;$(BZSLIB_PATH)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(UniversalCRT_IncludePath);$(BZSLIB_PATH);$(WDKPATH)km;$(WDKPATH)shared;$(WDKPATH);$(VC_VC_IncludePath)</AdditionalIncludeDirectories>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <StringPooling>true</StringPooling>
       <ExceptionHandling>false</ExceptionHandling>
@@ -377,6 +374,8 @@
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <CallingConvention>StdCall</CallingConvention>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <IgnoreStandardIncludePath>true</IgnoreStandardIncludePath>
+      <AdditionalOptions>/kernel %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -670,6 +669,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release (WinKernel)|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release (WinKernel)|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="stlextend.cpp" />
     <ClCompile Include="Win32\path.cpp" />
     <ClCompile Include="Win32\registry_win32.cpp" />
     <ClCompile Include="Win32\security.cpp" />

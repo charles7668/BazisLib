@@ -1,18 +1,29 @@
 #include "stdafx.h"
+
+#include <cstdarg>
 #ifdef BZSLIB_WINKERNEL
 #include "memdbg.h"
 #include "kmemory.h"
 
 using namespace BazisLib;
 
-void * __cdecl operator new(size_t size)
-{
-#ifdef BZSLIB_MEMORY_DEBUG_HOOKS
-	return MemoryDebug::OnMemoryAllocation(ExAllocatePoolWithTag(PagedPool, size + MemoryDebug::MEMORY_DEBUG_SHIFT, 'WENB'), size);
-#else
-	return ExAllocatePoolWithTag(PagedPool, size, 'WENB');
-#endif
-}
+// void * __cdecl operator new(size_t size)
+// {
+// #ifdef BZSLIB_MEMORY_DEBUG_HOOKS
+// 	return MemoryDebug::OnMemoryAllocation(ExAllocatePoolWithTag(PagedPool, size + MemoryDebug::MEMORY_DEBUG_SHIFT, 'WENB'), size);
+// #else
+// 	return ExAllocatePoolWithTag(PagedPool, size, 'WENB');
+// #endif
+// }
+
+// void* __cdecl operator new[](size_t size)
+// {
+// #ifdef BZSLIB_MEMORY_DEBUG_HOOKS
+// 	return MemoryDebug::OnMemoryAllocation(ExAllocatePoolWithTag(PagedPool, size + MemoryDebug::MEMORY_DEBUG_SHIFT, 'WENB'), size);
+// #else
+// 	return ExAllocatePoolWithTag(PagedPool, size, 'WENB');
+// #endif
+// }
 
 
 void * __cdecl npagednew(size_t size)
@@ -24,17 +35,29 @@ void * __cdecl npagednew(size_t size)
 #endif
 }
 
-void __cdecl operator delete(void *ptr)
-{
-	if (ptr != NULL)
-	{
-#ifdef BZSLIB_MEMORY_DEBUG_HOOKS
-	ExFreePoolWithTag(MemoryDebug::OnMemoryFree(ptr), 'WENB');
-#else
-	ExFreePoolWithTag(ptr, 'WENB');
-#endif
-	}
-}
+// void __cdecl operator delete(void *ptr)
+// {
+// 	if (ptr != NULL)
+// 	{
+// #ifdef BZSLIB_MEMORY_DEBUG_HOOKS
+// 	ExFreePoolWithTag(MemoryDebug::OnMemoryFree(ptr), 'WENB');
+// #else
+// 	ExFreePoolWithTag(ptr, 'WENB');
+// #endif
+// 	}
+// }
+//
+// void __cdecl operator delete(void* ptr , unsigned __int64 size)
+// {
+// 	if (ptr != NULL)
+// 	{
+// #ifdef BZSLIB_MEMORY_DEBUG_HOOKS
+// 	ExFreePoolWithTag(MemoryDebug::OnMemoryFree(ptr), 'WENB');
+// #else
+// 		ExFreePoolWithTag(ptr, 'WENB');
+// #endif
+// 	}
+// }
 
 
 /*
@@ -54,7 +77,7 @@ void _cdecl exit(int _Code)
 */
 
 
-void * _cdecl malloc(size_t size)
+void * __cdecl malloc(size_t size)
 {
 #ifdef BZSLIB_MEMORY_DEBUG_HOOKS
 	return MemoryDebug::OnMemoryAllocation(ExAllocatePoolWithTag(PagedPool, size + MemoryDebug::MEMORY_DEBUG_SHIFT, 'LACB'), size);
@@ -62,6 +85,16 @@ void * _cdecl malloc(size_t size)
 	return ExAllocatePoolWithTag(PagedPool, size, 'LACB');
 #endif
 }
+
+void __cdecl free(void *p)
+{
+#ifdef BZSLIB_MEMORY_DEBUG_HOOKS
+	ExFreePoolWithTag(MemoryDebug::OnMemoryFree(p), 'LACB');
+#else
+	ExFreePoolWithTag(p, 'LACB');
+#endif
+}
+
 
 //void * __cdecl realloc(void * _Memory, size_t _Size)
 void * __cdecl _realloc(void * _Memory, size_t _Size, size_t _OldSize)
@@ -84,14 +117,5 @@ void * __cdecl _realloc(void * _Memory, size_t _Size, size_t _OldSize)
 	return pMem;
 }
 
-
-void _cdecl free(void *p)
-{
-#ifdef BZSLIB_MEMORY_DEBUG_HOOKS
-	ExFreePoolWithTag(MemoryDebug::OnMemoryFree(p), 'LACB');
-#else
-	ExFreePoolWithTag(p, 'LACB');
-#endif
-}
 
 #endif

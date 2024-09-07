@@ -1,7 +1,7 @@
 #pragma once
 #include "cmndef.h"
 
-#include <string>
+#include <string.h>
 #include "strbase.h"
 #include "tchar_compat.h"
 

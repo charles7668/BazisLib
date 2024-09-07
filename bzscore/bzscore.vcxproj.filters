@@ -343,5 +343,8 @@
     <ClCompile Include="KEXT\kext_unicode.cpp">
       <Filter>Source Files\KEXT</Filter>
     </ClCompile>
+    <ClCompile Include="stlextend.cpp">
+      <Filter>Source Files\WinKernel</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
